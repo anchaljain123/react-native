@@ -15,15 +15,14 @@ export default class QRScan extends Component {
     };
 
 
-    _handleBarCodeRead = (data) => {
+    _handleBarCodeRead = (scan) => {
         const {goBack} = this.props.navigation;
 
         this.setState({hasCameraPermission:false},()=>{
-            // navigate('ScanList',{Result:JSON.stringify(data)});
-            this.props.navigation.state.params.updateState(data);
-            goBack()
+            this.props.navigation.state.params.updateState(JSON.parse(scan.data));
+            goBack();
         });
-        // ]]this.props.updateState();
+
     };
 
     render() {

@@ -12,12 +12,25 @@ export default class App extends Component {
         }
     }
 
+    // componentWillMount(){
+    //     fetch('url').then(res => res.json())
+    // .then(scans => this.setState({ScanResults:scans})).catch(err => console.log(err) )}
+
     updateState = (scan) => {
-        scan = JSON.parse(scan.data);
-        scan.date = Date.now();
-        let ScanResults = [...this.state.ScanResults];
-        ScanResults.push(scan);
+        let today = new Date(),
+            scanObj = Object.assign({},scan,{Date:today.toLocaleString()}),
+          ScanResults = [...this.state.ScanResults];
+
+        ScanResults.push(scanObj);
         this.setState({ScanResults});
+        // fetch('url',{
+        //     method: 'POST',
+        //     body: JSON.stringify(scanObj),
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //     },
+        // }).then().catch()
     };
 
     render() {
@@ -56,7 +69,7 @@ export default class App extends Component {
                                 </View>
                                 <View style={{flex: 10, margin: 10, flexDirection: 'column'}}>
                                     <Text>{item.Name}</Text>
-                                    <Text>{item.date}</Text>
+                                    <Text>{item.Date}</Text>
                                 </View>
                                 <View style={{margin: 10, flex: 3,alignItems:'flex-end'}}>
                                     <TouchableHighlight onPress={() =>this.props.navigation.navigate('Scanned',{Data:item})}>

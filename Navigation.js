@@ -1,4 +1,4 @@
-import { StackNavigator } from 'react-navigation';
+import {StackNavigator} from 'react-navigation';
 import LoginPage from './LoginPage';
 import ScanList from './ScanList';
 import ScanResult from './ScanResult'
@@ -7,33 +7,33 @@ import QRScan from './QRScan'
 const stackRoutes = {
     Login: {
         screen: LoginPage,
-        navigationOptions : {
+        navigationOptions: {
             title: 'Login',
         }
     },
     ScanList: {
         screen: ScanList,
-        navigationOptions : {
+        navigationOptions: {
             title: 'Your Scans',
         }
     },
-    Scanned:{
+    Scanned: {
         screen: ScanResult,
-        navigationOptions : {
+        navigationOptions: {
             title: 'Result',
         }
     },
-    QrScan:{
+    QrScan: {
         screen: QRScan
     }
 };
 
-export default  StackNavigator(stackRoutes,{
-        initialRouteName: 'Login',
-        navigationOptions:{
-            headerStyle:{
-               backgroundColor:'orange',
-           }
+export default StackNavigator(stackRoutes, {
+    initialRouteName: 'Login',
+    navigationOptions: {
+        headerStyle: {
+            backgroundColor: 'orange',
+        }
     }
 });
 
