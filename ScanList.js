@@ -1,20 +1,33 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, FlatList, TouchableOpacity, TouchableHighlight} from 'react-native';
+import {
+    Text,
+    View,
+    StyleSheet,
+    FlatList,
+    TouchableOpacity,
+    TouchableHighlight,
+    AsyncStorage
+} from 'react-native';
 import {Constants} from 'expo';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 export default class App extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            ScanResults : []
+            ScanResults: []
         }
     }
 
     // componentWillMount(){
-    //     fetch('url').then(res => res.json())
-    // .then(scans => this.setState({ScanResults:scans})).catch(err => console.log(err) )}
+    //     fetch('url').then(res => res.json()).then(res=>res.json)
+    // .then(async scans => {
+    // try {
+    // const value = await AsyncStorage.getItem('@MySuperStore');
+    // if (value !== null){this.setState({ScanResults:value})}
+    //    }catch (error) {console.log(err)}
+    // }).catch(err => console.log(err) )}
 
     updateState = (scan) => {
         let today = new Date(),
@@ -23,6 +36,12 @@ export default class App extends Component {
 
         ScanResults.push(scanObj);
         this.setState({ScanResults});
+
+        AsyncStorage.setItem('@MySuperStore', ScanResults)
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
+
         // fetch('url',{
         //     method: 'POST',
         //     body: JSON.stringify(scanObj),
@@ -30,7 +49,14 @@ export default class App extends Component {
         //         'Accept': 'application/json',
         //         'Content-Type': 'application/json'
         //     },
-        // }).then().catch()
+        // }).then(res=>res.json()).
+        // then(async data =>{
+        // try {
+        // await  AsyncStorage.setItem('@MySuperStore', data)
+        // }
+        //  catch(err) {console.log(err)}
+        // })
+        // .catch(err => console.log(err))
     };
 
     render() {
@@ -81,13 +107,11 @@ export default class App extends Component {
                         )}
                     />
                 </View>
-                <View style={styles.floatingButton}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('QrScan',{updateState: this.updateState})}>
-                    <View style={{flex:1,alignSelf:'center',justifyContent:'center'}}>
-                        <Text>QR Scan </Text>
-                    </View>
+
+                <TouchableOpacity style={styles.floatingButton} onPress={() => this.props.navigation.navigate('QrScan',{updateState: this.updateState})}>
+                    <Text>QR Scan </Text>
                 </TouchableOpacity>
-                </View>
+
             </View>
         );
     }
@@ -116,5 +140,7 @@ const styles = StyleSheet.create({
         bottom: 10,
         right: 10,
         backgroundColor: 'rgb(174, 214, 241)',
+        alignItems:'center',
+        justifyContent:'center'
     },
 });

@@ -11,7 +11,8 @@ export default class QRScan extends Component {
     }
     async componentWillMount() {
         const { status } = await Permissions.askAsync(Permissions.CAMERA);
-        this.setState({hasCameraPermission: status === 'granted'});
+       if(status === 'granted')
+        this.setState({hasCameraPermission: true});
     };
 
 

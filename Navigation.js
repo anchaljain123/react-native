@@ -3,6 +3,7 @@ import LoginPage from './LoginPage';
 import ScanList from './ScanList';
 import ScanResult from './ScanResult'
 import QRScan from './QRScan'
+import Contact from './ContactUs'
 
 const stackRoutes = {
     Login: {
@@ -19,12 +20,16 @@ const stackRoutes = {
     },
     Scanned: {
         screen: ScanResult,
+        path:'/scanResult',
         navigationOptions: {
             title: 'Result',
         }
     },
     QrScan: {
         screen: QRScan
+    },
+    Contact: {
+        screen: Contact,
     }
 };
 

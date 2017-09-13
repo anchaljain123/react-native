@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, TouchableHighlight, TouchableOpacity, Alert} from 'react-native';
+import {Text, View, StyleSheet, TouchableHighlight, TouchableOpacity, Alert , Image} from 'react-native';
 import {Constants, Facebook} from 'expo';
 
 export default class LoginPage extends Component {
@@ -12,15 +12,15 @@ export default class LoginPage extends Component {
 
     async _onPressButton() {
         const {type, token} = await Facebook.logInWithReadPermissionsAsync('1228027190676210', {
-            permissions: ['public_profile'],
+            permissions: ['public_profile','email', 'user_friends', 'user_photos'],
         });
         if (type === 'success') {
-            const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+            const response = await fetch(`https://graph.facebook.com/me?
+            fields=id,name,email&&access_token=${token}`);
             Alert.alert(
                 'Logged in!',
                 `Hi ${(await response.json()).name}!`,
             );
-            if (response)
                 this.props.navigation.navigate('ScanList')
         }
     }
@@ -38,7 +38,10 @@ export default class LoginPage extends Component {
         const {navigate} = this.props.navigation;
         return (
             <View style={styles.container}>
-                <View style={{width: 160, height: 160, backgroundColor: 'white', borderRadius: 90, margin: 40}}></View>
+                <View style={{height: 150,  margin: 40,borderRadius: 90,
+                    alignItems:'center',justifyContent:'center'}}>
+                    <Image  source={require('./assets/icons/logo.png')} resizeMode={'center'}/>
+                </View>
                 <View style={{alignSelf: 'center'}}>
                     <TouchableHighlight underlayColor="white" onPress={() => this._onPressButton()}>
                         <View style={styles.button}>
@@ -48,6 +51,13 @@ export default class LoginPage extends Component {
                     <TouchableOpacity onPress={() => navigate('ScanList')}>
                         <View>
                             <Text style={{alignSelf: 'center'}}>Skip this step</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={{flex:1,marginTop:20}}>
+                    <TouchableOpacity onPress={() => navigate('Contact')} >
+                        <View style ={{}}>
+                            <Text style={{color: '#2196F3'}}>Contact Us</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
