@@ -1,25 +1,26 @@
-import React,{Component} from 'react';
-import { StyleSheet, View } from 'react-native';
-import { BarCodeScanner, Permissions,Constants } from 'expo';
+import React, {Component} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {BarCodeScanner, Permissions, Constants} from 'expo';
 
 export default class QRScan extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             hasCameraPermission: false
         }
     }
+
     async componentWillMount() {
-        const { status } = await Permissions.askAsync(Permissions.CAMERA);
-       if(status === 'granted')
-        this.setState({hasCameraPermission: true});
+        const {status} = await Permissions.askAsync(Permissions.CAMERA);
+        if (status === 'granted')
+            this.setState({hasCameraPermission: true});
     };
 
 
     _handleBarCodeRead = (scan) => {
         const {goBack} = this.props.navigation;
 
-        this.setState({hasCameraPermission:false},()=>{
+        this.setState({hasCameraPermission: false}, () => {
             this.props.navigation.state.params.updateState(JSON.parse(scan.data));
             goBack();
         });
@@ -28,19 +29,19 @@ export default class QRScan extends Component {
 
     render() {
         return (
-                <View style={styles.container}>
-                    {
-                        this.state.hasCameraPermission &&
-                        <View style={{flex:1,height:400,width:400}}>
-                            <BarCodeScanner
-                                onBarCodeRead={this._handleBarCodeRead}
-                                style={StyleSheet.absoluteFill}
-                            />
-                        </View>
-                    }
-                </View>
-            );
-        }
+            <View style={styles.container}>
+                {
+                    this.state.hasCameraPermission &&
+                    <View style={{flex: 1, height: 400, width: 400}}>
+                        <BarCodeScanner
+                            onBarCodeRead={this._handleBarCodeRead}
+                            style={StyleSheet.absoluteFill}
+                        />
+                    </View>
+                }
+            </View>
+        );
+    }
 
 }
 
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
         width: 260,
         alignItems: 'center',
         backgroundColor: '#2196F3',
-        borderRadius:15
+        borderRadius: 15
     },
     buttonText: {
         padding: 20,

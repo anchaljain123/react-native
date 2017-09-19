@@ -1,24 +1,26 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Navigation from './Navigation'
 import {Permissions, Notifications} from 'expo';
 
 export default class App extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            notification:{}
+            notification: {}
         }
     }
-    componentWillMount(){
+
+    componentWillMount() {
         this.registerForPushNotificationsAsync();
         this._notificationSubscription = Notifications.addListener(this._handleNotification);
     }
 
     _handleNotification = (notification) => {
-        this.setState({notification},()=>{
+        this.setState({notification}, () => {
             console.log(this.state.notification)
         });
     };
+
     async registerForPushNotificationsAsync() {
         const {existingStatus} = await Permissions.getAsync(Permissions.NOTIFICATIONS);
         let finalStatus = existingStatus;
@@ -33,6 +35,7 @@ export default class App extends Component {
         let token = await Notifications.getExpoPushTokenAsync();
         console.log(token)
     }
+
     render() {
         return (
             <Navigation/>

@@ -54,11 +54,14 @@ export default class LoginPage extends Component {
                         </View>
                     </TouchableOpacity>
                 </View>
-                <View style={{flex:1,marginTop:20}}>
+                <View style={{flex:1,marginTop:20,justifyContent:'center',alignItems:'center'}}>
                     <TouchableOpacity onPress={() => navigate('Contact')} >
                         <View style ={{}}>
                             <Text style={{color: '#2196F3'}}>Contact Us</Text>
                         </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigate('About')} style={{marginTop:20}} >
+                            <Text style={{color: '#2196F3'}}>About Us</Text>
                     </TouchableOpacity>
                 </View>
             </View>

@@ -1,9 +1,10 @@
-import {StackNavigator} from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 import LoginPage from './LoginPage';
 import ScanList from './ScanList';
 import ScanResult from './ScanResult'
 import QRScan from './QRScan'
 import Contact from './ContactUs'
+import About from './About'
 
 const stackRoutes = {
     Login: {
@@ -20,7 +21,7 @@ const stackRoutes = {
     },
     Scanned: {
         screen: ScanResult,
-        path:'/scanResult',
+        path: 'scanResult/:user',
         navigationOptions: {
             title: 'Result',
         }
@@ -30,6 +31,9 @@ const stackRoutes = {
     },
     Contact: {
         screen: Contact,
+    },
+    About: {
+        screen: About
     }
 };
 

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {NavigationActions} from 'react-navigation'
 import {
     Text,
     View,
@@ -20,28 +21,35 @@ export default class App extends Component {
         }
     }
 
-    // componentWillMount(){
-    //     fetch('url').then(res => res.json()).then(res=>res.json)
-    // .then(async scans => {
-    // try {
-    // const value = await AsyncStorage.getItem('@MySuperStore');
-    // if (value !== null){this.setState({ScanResults:value})}
-    //    }catch (error) {console.log(err)}
-    // }).catch(err => console.log(err) )}
+    /*
+async componentWillMount() {
+  try {
+      const value = await AsyncStorage.getItem('@MySuperStore');
+      if (value !== null) {
+          this.setState({ScanResults: value})
+      }else{
+
+          await AsyncStorage.setItem('@MySuperStore', this.state.ScanResults)
+      }
+  } catch (error) {
+      console.log(err)
+  }
+}*/
 
     updateState = (scan) => {
         let today = new Date(),
-            scanObj = Object.assign({},scan,{Date:today.toLocaleString()}),
-          ScanResults = [...this.state.ScanResults];
+            scanObj = Object.assign({}, scan, {Date: today.toLocaleString()}),
+            ScanResults = [...this.state.ScanResults];
 
         ScanResults.push(scanObj);
         this.setState({ScanResults});
 
+        /*
         AsyncStorage.setItem('@MySuperStore', ScanResults)
             .then(res => res.json())
             .then(data => console.log(data))
             .catch(err => console.log("err",err))
-
+        */
         // fetch('url',{
         //     method: 'POST',
         //     body: JSON.stringify(scanObj),
@@ -62,7 +70,7 @@ export default class App extends Component {
     render() {
         return (
             <View style={styles.container}>
-              {/*  <View style={{
+                {/*  <View style={{
                     flexDirection: 'row',
                     borderWidth: 1,
                     borderColor: 'black',
@@ -78,37 +86,39 @@ export default class App extends Component {
                         keyExtractor={(item, index) => index}
                         data={this.state.ScanResults}
                         renderItem={({item, index}) => (
-                            <TouchableOpacity onPress={() =>this.props.navigation.navigate('Scanned',{Data:item})}>
-                            <View style={{
-                                backgroundColor: 'white',
-                                borderBottomColor: 'black',
-                                flexDirection: 'row',
-                                borderBottomWidth: 1
-                            }}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Scanned', {Data: item})}>
                                 <View style={{
-                                    height: 40,
-                                    backgroundColor: '#CEB5ED',
-                                    borderRadius: 10,
-                                    margin: 10,
-                                    flex: 3
+                                    backgroundColor: 'white',
+                                    borderBottomColor: 'black',
+                                    flexDirection: 'row',
+                                    borderBottomWidth: 1
                                 }}>
+                                    <View style={{
+                                        height: 40,
+                                        backgroundColor: '#CEB5ED',
+                                        borderRadius: 10,
+                                        margin: 10,
+                                        flex: 3
+                                    }}>
+                                    </View>
+                                    <View style={{flex: 10, margin: 10, flexDirection: 'column'}}>
+                                        <Text>{item.Name}</Text>
+                                        <Text>{item.Date}</Text>
+                                    </View>
+                                    <View style={{margin: 10, flex: 3, alignItems: 'flex-end'}}>
+                                        <TouchableHighlight
+                                            onPress={() => this.props.navigation.navigate('Scanned', {Data: item})}>
+                                            <Icon name="chevron-right" size={25} style={{color: "#d6d7da"}}/>
+                                        </TouchableHighlight>
+                                    </View>
                                 </View>
-                                <View style={{flex: 10, margin: 10, flexDirection: 'column'}}>
-                                    <Text>{item.Name}</Text>
-                                    <Text>{item.Date}</Text>
-                                </View>
-                                <View style={{margin: 10, flex: 3,alignItems:'flex-end'}}>
-                                    <TouchableHighlight onPress={() =>this.props.navigation.navigate('Scanned',{Data:item})}>
-                                        <Icon name="chevron-right" size={25} style={{color: "#d6d7da"}}/>
-                                    </TouchableHighlight>
-                                </View>
-                            </View>
                             </TouchableOpacity>
                         )}
                     />
                 </View>
 
-                <TouchableOpacity style={styles.floatingButton} onPress={() => this.props.navigation.navigate('QrScan',{updateState: this.updateState})}>
+                <TouchableOpacity style={styles.floatingButton}
+                                  onPress={() => this.props.navigation.navigate('QrScan', {updateState: this.updateState})}>
                     <Text>QR Scan </Text>
                 </TouchableOpacity>
 
@@ -140,7 +150,7 @@ const styles = StyleSheet.create({
         bottom: 10,
         right: 10,
         backgroundColor: 'rgb(174, 214, 241)',
-        alignItems:'center',
-        justifyContent:'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
 });
